@@ -50,20 +50,17 @@ def download_salary_data(URL,years):
     
     years_label, data = data_to_dict(years)
     driver = initialize_selenium(URL)
+    print(list(years_label))
 
-    for i in in years_label:
+    for i in years_label:
         time.sleep(2)
         df = pd.read_html(driver.current_url)[0] 
-        while check_exists(driver,'jcarousel-next-disabled') == False:
-            next = driver.find_element_by_class_name('jcarousel-next')
-            next.click()
-            time.sleep(5)
-            temp = pd.read_html(driver.current_url)[0]
-            df = df.append(temp,ignore_index=True)
-        years = Select(driver.find_element_by_class_name('tablesm'))
-        years.select_by_visible_text(str(i-1)+"-"+str(i))
         data[i]=df
-    
+        years = driver.find_element_by_class_name("salaries-team-selector-top")
+        years.click()
+        year = driver.find_element_by_link_text(str(i-1)+"/"+str(i-2000).zfill(2))
+        year.click()
+        
     driver.quit()
     
     return data
@@ -101,19 +98,19 @@ def download_player_data(URL, years, type_data):
     wait.until(EC.visibility_of_element_located((By.LINK_TEXT, type_data))).click()
     
     for i in years_label:
-        df = pd.read_html(driver.current_url)[0]
-        df = df[df.Rk != 'Rk']
-        data[i]=df
         prev_year = driver.find_element_by_css_selector("a.button2.prev")
         prev_year.click()
         time.sleep(10)
+        df = pd.read_html(driver.current_url)[0]
+        df = df[df.Rk != 'Rk']
+        data[i]=df
     
     driver.quit()
     
     return data
 
 def download_fa_data(URL):
-    years_label, data = data_to_dict(years)
+    data={}
     driver = initialize_selenium(URL)
 
     for i in range(2018,2010,-1):
@@ -124,7 +121,9 @@ def download_fa_data(URL):
         time.sleep(10)
         df = pd.read_html(driver.current_url)[0]
         data[i]=df
-        
+    
+    driver.quit()
+    
     return data
 
 def save_dataset(data,filename):
@@ -139,10 +138,10 @@ def run():
     data_fa = download_fa_data("https://www.spotrac.com/nba/free-agents/")
     data_reg = download_player_data("https://www.basketball-reference.com", 12, "Per G")
     data_adv = download_player_data("https://www.basketball-reference.com", 12, "Advanced")
-    data_salary = download_salary_data("http://www.espn.com/nba/salaries/_/year/2019", 12)
+    data_salary = download_salary_data("https://hoopshype.com/salaries/players/", 12)
     data_rookie = download_rookie_data("https://www.basketball-reference.com/leagues/NBA_2018_rookies.html", 12)
-    save_dataset(data_fa, "data/raw/datafa.pickle")
-    save_dataset(data_reg, "data/raw/regstats.pickle")
-    save_dataset(data_adv, "data/raw/advstats.pickle")
-    save_dataset(data_salary, "data/raw/salaries.pickle")
-    save_dataset(data_rookie, "data/raw/rookies.pickle")
+    save_dataset(data_fa, "data/raw/freeagents2.pickle")
+    save_dataset(data_reg, "data/raw/regstats2.pickle")
+    save_dataset(data_adv, "data/raw/advstats2.pickle")
+    save_dataset(data_salary, "data/raw/salaries2.pickle")
+    save_dataset(data_rookie, "data/raw/rookies2.pickle")

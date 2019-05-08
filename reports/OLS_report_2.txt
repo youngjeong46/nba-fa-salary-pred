@@ -1,0 +1,41 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                 SALARY   R-squared:                       0.533
+Model:                            OLS   Adj. R-squared:                  0.530
+Method:                 Least Squares   F-statistic:                     170.9
+Date:                Fri, 19 Apr 2019   Prob (F-statistic):               0.00
+Time:                        09:05:57   Log-Likelihood:                -37849.
+No. Observations:                2260   AIC:                         7.573e+04
+Df Residuals:                    2244   BIC:                         7.582e+04
+Df Model:                          15                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept   1.998e+06   8.66e+05      2.307      0.021    2.99e+05     3.7e+06
+G          -2.414e+04   4567.169     -5.285      0.000   -3.31e+04   -1.52e+04
+GS          2.027e+04   2947.013      6.878      0.000    1.45e+04     2.6e+04
+MP           358.2001    235.631      1.520      0.129    -103.877     820.277
+OBPM       -6.535e+04   7.47e+04     -0.875      0.382   -2.12e+05    8.11e+04
+FGA         2.458e+04   1.78e+04      1.382      0.167   -1.03e+04    5.94e+04
+_3PA       -2.124e+04   1.78e+04     -1.195      0.232   -5.61e+04    1.36e+04
+_2PA        -2.25e+04   1.78e+04     -1.266      0.206   -5.73e+04    1.23e+04
+OWS         4.829e+05   1.26e+05      3.819      0.000    2.35e+05    7.31e+05
+DWS         8.564e+04   1.63e+05      0.525      0.600   -2.34e+05    4.06e+05
+VORP        1.933e+05   2.12e+05      0.911      0.362   -2.23e+05    6.09e+05
+USGPCT      1.212e+05      4e+04      3.028      0.002    4.27e+04       2e+05
+ORBPCT      7.859e+04   3.64e+04      2.158      0.031    7163.693     1.5e+05
+STLPCT     -9.504e+05   1.84e+05     -5.178      0.000   -1.31e+06    -5.9e+05
+BLKPCT     -7.988e+04   1.05e+05     -0.759      0.448   -2.86e+05    1.27e+05
+DBPM        4.328e+05   1.35e+05      3.203      0.001    1.68e+05    6.98e+05
+==============================================================================
+Omnibus:                      294.593   Durbin-Watson:                   0.976
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              558.474
+Skew:                           0.823   Prob(JB):                    5.36e-122
+Kurtosis:                       4.795   Cond. No.                     4.77e+04
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 4.77e+04. This might indicate that there are
+strong multicollinearity or other numerical problems.

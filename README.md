@@ -1,86 +1,68 @@
-## Data Science MVP - v0.1
-
-This is a basic data science project template intended to demonstrate how to use [cookiecutter-datascience](https://drivendata.github.io/cookiecutter-data-science/) for better project workflow and engineering practices.
-
-In v0.1, we take a freshly initialized cookiecutter datascience project and remove the files that are likely to be unfamiliar to new data scientists, leaving only the ones that present a self-describing project workflow.
-
-## How to use this template (v0.1)
-
-Now use the following cells as a guide as you work through your Minimum Viable Product. Remember, the purpose of the MVP is not to put together a solution that's ready to be published! This is your chance to take a quick pass through the data, run it through a simple model, and get some preliminary results. When this phase is over, you'll have an end-to-end pipeline and a basic understanding of the problem. Then you'll be able to iterate on each stage as you improve your research and find better and better insights.
-
-At the start of each code cell there is a `%%writefile` command that is commented out twice. When you're done building your MVP, uncomment these lines and run the cells again. (Remember to run the entire notebook once before doing this to make sure that your code works!) These commands will export your code cells to python scripts in the `src` directory. The last cell will build a `main.py` script in the top level directory that can be run to execute the entire pipeline.
-
-Note that for this to work, you'll either need to include your import statements in the code cells where they're used, or you'll need to go through the generated scripts manually and make sure they have everything they need to run. You will also need to be careful about sharing variable names across cells, since they won't be accessible when the code is exported to separate scripts. Work with these cells as if each one is an independent Python script.
-
-_In this version (0.1), I've removed the files from cookicutter datascience that would be useful for releasing your project as an installable package._
+# Predicting NBA Player Salary
 
 
-## Project Organization (modified from cookiecutter-datascience)
-------------
-```
-    ├── LICENSE
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-```
+## Overview
 
---------
-Removed files:
+This project took various NBA player data and used it to build a linear regression model. The model predicts the NBA player salary for the Free Agents following the 2017-18 Season.
 
-(See https://datasciencemvp.com for tutorials on how to integrate these with your projects. And drop me a comment if you're eager to get started with any of these and I haven't written a post about them yet. These tools may be unfamiliar to new data scientists, and the intention behind this version is to get you up and running as quickly as possible.)
+Blog post on the topic can be found [here]("https://datatostories.com/posts/2019/04/19/nba-salary-predictions/").
 
-```
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-    |
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.testrun.org
-```
+## Project Design
 
-Edited files:
+I chose to predict player salaries in the NBA out of personal interest. I've always been interested in how salary dynamics in professional sports work and wanted to see if player statistics can help predict the salary for the next season. 
 
-```
-    ├── src
-        ├── data
-        │   └── make_dataset.py  <- removed dependency on 'click' library
-```
+I chose to scrape data from various sports website (all listed in the Data Section). Upon cleaning the data, I had close to 2260 player statistics; I ran a linear regression model on 19 features that showed strong correlation with the target variable (Salary) and added features using polynomials (degree 2 terms and feature interaction terms). The best model produced was a linear regression model with ridge regularization applied. The alpha value for the ridge regularization was 8.21, the mean absolute error on the training set was \$3.04M, and the R^2 score of 0.5619. 
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+Some potential improvements can be made, and some that I want to implement include adding more player information, measuring his popularity on the web (Twitter, Instgram), and factoring NBA financial structures into the account. 
+
+## Application
+
+A model that performs well to predict NBA Salaries can be of many use:
+
+- NBA Executives can use to determine if a player they are targeting is worth the contract he is asking for.
+- Agents or players can set themselves an expectation about how much money they want to ask for during Free Agency
+- Similar modeling can be done with other sports (i.e. Baseball, Soccer); in fact, data analytics in sports is more popular than ever and this could very well be in effect.
+
+
+
+## Tools
+
+- Web Scraping: Selenium
+- Data Storage: Pandas, pickle
+- Data Visualization: seaborn, matplotlib
+- Data Analysis: Statsmodel, Scikit-learn
+- Presentation: Google Slides
+
+## Data
+
+The data was obtained by scraping the following websites:
+
+1. Basketball-Reference.com: Player stats by year from 2008-09 seasons to 2017-18 seasons, Rookie lists from 2008-09 seasons to 2017-18 seasons
+2. HoopsHype.com: Player salaries from years 2009-10 to 2018-19 seasons
+3. Spotrac.com: Free Agent lists from 2011 to 2018
+
+The data were accumulated and then combined to create a single dataset of 2260 total observations. The features used were accumulated are listed in the Appendix.
+
+## Appendix: Features Used
+
+| Features | Type         |  Description | 
+| -------- | ------------ |------------- |
+| G  | Int |Number of Games the player played in the past 3 seasons |
+| GS  | Int |Number of Games the player started in the past 3 seasons|
+| MP  | Float |Minutes played per game in the past seasons |
+| 2PA  | Float | 2 Points attempted in the past 3 seasons |
+| FGA  | Float | Total field goals attempted in the past 3 seasons |
+| FT  | Float | Total free throws made in the past 3 seasons |
+| 3P  | Float | Total 3 points field goals made in the past 3 seasons |
+| DRB  | Float |Total defensive rebounds grabbed in the past 3 seasons |
+| ORB  | Float |Total offensive rebounds grabbed in the past 3 season|
+| AST  | Float |Total assists in the past 3 season|
+| BLK  | Float |Total blocks in the past 3 season |
+| TOV | Float |Total turnovers in the past 3 season|
+| PTS  | Float |Total points in the past 3 season|
+| VORP  | Float |Total defensive rebounds grabbed in the past 3 season |
+| USG%  | Float | Usage rate: how much a player possesses the ball on offense|
+| STL%  | Float | A player's steal rate in a game |
+| DBPM  | Float | Defensive Plus/Minus: measures a player's defensive contribution by looking at how much his team outscores (or is outscored by) the opponent |
+| TOV%  | Float |A player's turnover rate in a game |
+| DWS  | Float |Defensive Win Share: measure's a player's defensive contribution by looking at how many wins he is responsible for |
