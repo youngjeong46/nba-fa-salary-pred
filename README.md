@@ -5,7 +5,7 @@
 
 This project took various NBA player data and used it to build a linear regression model. The model predicts the NBA player salary for the Free Agents following the 2017-18 Season.
 
-Blog post on the topic can be found [here]("https://datatostories.com/posts/2019/04/19/nba-salary-predictions/").
+Blog post on the topic can be found [here](https://datatostories.com/posts/2019/04/19/nba-salary-predictions/).
 
 ## Project Design
 
